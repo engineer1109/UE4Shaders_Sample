@@ -5,6 +5,9 @@
 #include "RenderTargetPool.h"
 #include "RenderPass.h"
 
+#include <iostream>
+#include <string>
+
 #define LOCTEXT_NAMESPACE "FUE4ShaderPluginSampleModule"
 
 void FUE4ShaderPluginSampleModule::StartupModule()
@@ -15,6 +18,7 @@ void FUE4ShaderPluginSampleModule::StartupModule()
 
 	// Maps virtual shader source directory to the plugin's actual shaders directory.
 	FString PluginShaderDir = FPaths::Combine(IPluginManager::Get().FindPlugin(TEXT("UE4ShaderPluginSample"))->GetBaseDir(), TEXT("Shaders"));
+
 	AddShaderSourceDirectoryMapping(TEXT("/SimpleShaders"), PluginShaderDir);
 }
 

@@ -3,4 +3,4 @@
 
 #include "VertexShader.h"
 
-IMPLEMENT_GLOBAL_SHADER(FVertexShader, "/SimpleShaders/Private/SimpleGeometry.usf", "MainPixelShader", SF_Vertex);
+IMPLEMENT_GLOBAL_SHADER(FVertexShader, "/SimpleShaders/Private/SimpleGeometry.usf", "MainVertexShader", SF_Vertex);
