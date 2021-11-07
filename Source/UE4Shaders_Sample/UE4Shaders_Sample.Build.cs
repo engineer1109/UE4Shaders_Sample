@@ -7,7 +7,9 @@ public class UE4Shaders_Sample : ModuleRules
 	public UE4Shaders_Sample(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
+
+		CppStandard = CppStandardVersion.Cpp17;
+
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
