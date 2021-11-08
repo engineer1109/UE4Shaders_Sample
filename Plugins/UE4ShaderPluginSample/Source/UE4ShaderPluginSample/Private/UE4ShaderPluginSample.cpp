@@ -29,6 +29,23 @@ void FUE4ShaderPluginSampleModule::ShutdownModule()
 	EndRendering();
 }
 
+void FUE4ShaderPluginSampleModule::BeginRendering()
+{
+	if (OnPostResolvedSceneColorHandle.IsValid())
+	{
+		return;
+	}
+
+	bCachedParametersValid = false;
+
+	const FName RendererModuleName("Renderer");
+	IRendererModule* RendererModule = FModuleManager::GetModulePtr<IRendererModule>(RendererModuleName);
+	if (RendererModule)
+	{
+		OnPostResolvedSceneColorHandle = RendererModule->GetResolvedSceneColorCallbacks().AddRaw(this, &FUE4ShaderPluginSampleModule::PostResolveSceneColor_RenderThread);
+	}
+}
+
 void FUE4ShaderPluginSampleModule::EndRendering()
 {
 	if (!OnPostResolvedSceneColorHandle.IsValid())
@@ -44,6 +61,14 @@ void FUE4ShaderPluginSampleModule::EndRendering()
 	}
 
 	OnPostResolvedSceneColorHandle.Reset();
+}
+
+void FUE4ShaderPluginSampleModule::UpdateParameters(FShaderUsageExampleParameters& DrawParameters)
+{
+	RenderEveryFrameLock.Lock();
+	CachedShaderUsageExampleParameters = DrawParameters;
+	bCachedParametersValid = true;
+	RenderEveryFrameLock.Unlock();
 }
 
 void FUE4ShaderPluginSampleModule::PostResolveSceneColor_RenderThread(FRHICommandListImmediate& RHICmdList, FSceneRenderTargets& SceneContext)

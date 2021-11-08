@@ -33,11 +33,24 @@ class FUE4ShaderPluginSampleModule : public IModuleInterface
 {
 public:
 
+	static inline FUE4ShaderPluginSampleModule& Get()
+	{
+		return FModuleManager::LoadModuleChecked<FUE4ShaderPluginSampleModule>("UE4ShaderPluginSample");
+	}
+
+	static inline bool IsAvailable()
+	{
+		return FModuleManager::Get().IsModuleLoaded("UE4ShaderPluginSample");
+	}
+
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 
+	void BeginRendering();
 	void EndRendering();
+
+	void UpdateParameters(FShaderUsageExampleParameters& DrawParameters);
 
 public:
 	TRefCountPtr<IPooledRenderTarget> ComputeShaderOutput;
